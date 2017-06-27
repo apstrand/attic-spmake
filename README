@@ -1,0 +1,91 @@
+## spmake by Peter Strand (Copyright (C) 2002-2004)
+
+This code is part of a project of mine to revive old code,
+just for fun. This project is almost two decades old,
+please keep that in mind before judging my coding too harshly :)
+
+## Old README follows
+
+Quickstart:
+
+ [windows]
+  Reaper.bat
+
+ [Linux]
+  % ./reaper-2.sh               # using gcc and stlport
+ -or-
+  % ./reaper-3.sh               # using gcc-3.0.x installed as g++-3.0
+
+
+ Binaries appear in bin/
+
+ 
+General Usage:
+ 
+  Reaper [flags] [platform] [target] [settings]
+  
+  Platform may be one of: [win32, win32-icc, win32-gcc, gcc, gcc3]
+  Target may be one or more of: [lib, plugins, prototype, all, test, leveleditor, cpl]
+   where "all" is a shortcut for [lib, plugins, prototype],
+         "test" builds a test program from the source specified by the "src" setting,
+         "cpl" just compiles one file (specified by the "src" setting)
+  
+  Flags can be
+      "-v" For verbose output, apply once or twice (for more)
+      "-q" For no output
+      "-f" To force rebuild
+      "-c" To clean generated files
+      "-o" Turn on compiler optimizations
+      "-g" Turn on debug info
+ 
+  Settings are of the form variable=value,
+   Available settings include (default value in brackets):
+
+    topdir: path to the "reaper" directory                [../..]
+    srcdir: path to source directory, relative to topdir  [src]
+    dstdir: path to build directory, relative to topdir   [build/spmake/build]
+
+   [the following may be repeated]
+    cpl:    compiler flags
+    lnk:    linker flags
+    slnk:   static libmaker flags
+    dlnk:   dll libmaker flags
+
+ 
+  Example, to compile the object viewer, standing in "reaper/src",
+           optimized build, and full information:
+  
+  % ../build/spmake/reaper win32 test -vvo topdir=.. src=tools/obj_viewer/obj_viewer_2.cpp
+
+
+
+
+Details:
+
+ Using it from Hugs:
+ 
+  The Time and Directory modules are needed, you either have to use the
+  latest cvs-hugs, or use the provided modules.
+  Use these by running either mk_unix or mk_win32.bat in the hugs directory and
+  then add this to hugs' module path.
+  ie: "hugs -Phugs:" (unix) or "hugs -Phugs\;" (windows)
+ 
+  You may have to increase the stack size in hugs, -h1000k is enough for reaper.
+ 
+ 
+ Compiling to a binary:
+ 
+  To rebuild the binary using hugs, load Reaper.hs in hugs or ghci and run the
+  function "me".  You can select haskell compiler for the compilation by the
+  enviroment variable HCC, ghc is default.
+ 
+  Or directly with a recent ghc:
+  % ghc --make Reaper -o Reaper
+ 
+  Or with hmake
+  % hmake -ghc Reaper
+  or
+  % hmake -nhc98 Reaper
+ 
+ 
+ 
